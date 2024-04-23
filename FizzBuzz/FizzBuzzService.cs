@@ -15,6 +15,7 @@ namespace FizzBuzz
         {
             _calculators = new List<IFizzBuzzCalculator>();
             _calculators.Add(new FizzCalculator());
+            _calculators.Add(new BuzzCalculator());
         }
 
         public string GetFizzBuzzValue(int i)

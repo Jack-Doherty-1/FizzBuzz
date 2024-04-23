@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz.Calculators
 {
-    internal class FizzCalculator : IFizzBuzzCalculator
+    internal class BuzzCalculator : IFizzBuzzCalculator
     {
-        private int _divisor = 3;
-        private string _newValue = "Fizz";
+        private int _divisor = 5;
+        private string _newValue = "Buzz";
 
         public string CheckValue(int i)
         {
