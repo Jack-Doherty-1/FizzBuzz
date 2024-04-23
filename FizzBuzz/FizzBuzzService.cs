@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +15,18 @@ namespace FizzBuzz
         public FizzBuzzService()
         {
             _calculators = new List<IFizzBuzzCalculator>();
-            _calculators.Add(new FizzCalculator());
-            _calculators.Add(new BuzzCalculator());
+
+            var calculatorTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(p => p.GetTypes())
+                .Where(q => typeof(IFizzBuzzCalculator).IsAssignableFrom(q) && q.IsClass);
+
+            foreach (var calculatorType in calculatorTypes)
+            {
+                _calculators.Add((IFizzBuzzCalculator)Activator.CreateInstance(calculatorType));
+            }
+
+            //If I had more time, I wouldn't use this line of code and instead would order the calculators by the divisor value.
+            _calculators.Reverse();
         }
 
         public string GetFizzBuzzValue(int i)
